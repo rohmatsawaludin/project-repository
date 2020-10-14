@@ -53,12 +53,12 @@
             </b-form>
 
             <div class="pt-5">
-                <router-link to="dashboard"> Data Result</router-link>
+                <router-link to="/data-result">Data Result</router-link>
             </div>
         </div>
-    <!-- <b-card class="mt-3" header="Form Data Result">
+    <b-card class="mt-3" header="Form Data Result">
       <pre class="m-0">{{ form }}</pre>
-    </b-card> -->
+    </b-card>
     </div>
 </template>
 
@@ -67,10 +67,10 @@
     data() {
       return {
         form: {
-          email: '',
-          name: '',
-          food: null,
-          checked: []
+            email: '',
+            name: '',
+            food: null,
+            checked: []
         },
         foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
         show: true

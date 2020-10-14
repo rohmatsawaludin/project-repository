@@ -9,9 +9,9 @@ const router = new Router ({
         path: "",
         component: () => import("./components/Main.vue"),
         children: [{
-            path: "dashboard",
-            name: "dashboard",
-            component: () => import("./components/view/Dashboard.vue"),
+            path: "/data-result",
+            name: "result",
+            component: () => import("./components/view/Result.vue")
         }]
     }]
 })
