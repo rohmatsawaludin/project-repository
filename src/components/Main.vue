@@ -67,13 +67,14 @@
     data() {
       return {
         form: {
-            email: '',
-            name: '',
+            id: null,
+            email: null,
+            name: null,
             food: null,
             checked: []
         },
         foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-        show: true
+        form: []
       }
     },
     methods: {
