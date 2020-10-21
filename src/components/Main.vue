@@ -2,9 +2,8 @@
     <div id="app">
         <h2>Formulir</h2>
         <div class="px-5">
-            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-                <form v-if="insertVisible" @submit.prevent="onSubmit">
-                    <div class="px-5">
+            <b-form @submit="onSubmit" @reset="onReset" v-if="insertVisible">
+                <div class="px-5">
                         <div class="px-5">
                             <div class="px-5">
                                 <div class="px-5">
@@ -51,9 +50,8 @@
                         <b-button type="submit" variant="primary" class="mr-3" id="save">Submit</b-button>
                         <b-button type="reset" variant="danger">Reset</b-button>
                     </div>
-                </form>
-
-                <form v-if="visible" @submit.prevent="onEditSubmit">
+            </b-form>
+            <b-form v-if="visible" @submit="onEditSubmit">
                     <input v-if="keyVisible" type="text" name="key" placeholder="Key" v-model="keyInt" />
                         <div class="px-5">
                             <div class="px-5">
@@ -102,18 +100,16 @@
                             <b-button type="submit" variant="primary" class="mr-3" id="save">Submit</b-button>
                             <b-button type="reset" variant="danger">Reset</b-button>
                         </div>
-                </form>
-            </b-form>
-
+                </b-form>
             <div class="pt-5">
                 <router-link to="/data-result">Data Result</router-link>
             </div>
+            <b-card class="mt-3" header="Form Data Result">
+            <ul v-for="(key, i) in alldata" :key="i">
+                <li>{{key.data.kunci.nilai}} | <a href="#" @click.prevent="onDelete(key.key)">Delete</a> | <a href="#" @click.prevent="onEdit(key.key)">Edit</a></li>
+            </ul>
+            </b-card>
         </div>
-    <b-card class="mt-3" header="Form Data Result">
-        <ul v-for="(key, i) in alldata" :key="i">
-            <li>{{key.data.kunci.nilai}} | <a href="#" @click.prevent="onDelete(key.key)">Delete</a> | <a href="#" @click.prevent="onEdit(key.key)">Edit</a></li>
-        </ul>
-    </b-card>
     </div>
 </template>
 
@@ -159,7 +155,7 @@ export default {
                 this.checkedString = document.kunci.nilai.age
             })
             this.insertVisible ? this.insertVisible = false : this.insertVisible = false;
-	        this.visible ? this.visible = true : this.visible = true;
+            this.visible ?this.visible= true : this.visible = true;
         },
         async onSubmit(){
             if (this.form.email === '' || this.form.name === '' || this.form.food === '' || this.form.checked === ''){
@@ -172,7 +168,7 @@ export default {
                     checked: this.form.checked,
                 }
                 await db.collection('data').add({kunci: {nilai}})
-		        await db.collection('data').get({keys: true}).then(document => {
+                await db.collection('data').get({keys: true}).then(document => {
                     this.alldata = document
                 })
             }
@@ -181,7 +177,7 @@ export default {
             let editKey = this.keyInt
             const sure = window.confirm('Are you sure?');
             if (!sure) return;
-	        if (this.emailString === '' || this.nameString === '' || this.foodString === '' || this.checkedString === '') {
+            if (this.emailString === '' || this.nameString === '' || this.foodString === '' || this.checkedString === '') {
                 this.errorsPresent = true;
             } else {
                 nilai = {
@@ -191,8 +187,8 @@ export default {
                     checked: this.checkedString
                 }
                 console.log(this.keyInt)
-		        await db.collection('data').doc(editKey).update({kunci:{nilai}})
-		        await db.collection('data').get({keys: true}).then(document => {
+                await db.collection('data').doc(editKey).update({kunci:{nilai}})
+                await db.collection('data').get({keys: true}).then(document => {
                     this.alldata = document
                 })
                 await this.visible ? this.visible = false : this.visible = false;
